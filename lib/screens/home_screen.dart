@@ -68,8 +68,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                     child: Container(
-                      height: 51,
-                      width: 51,
+                      height: 53,
+                      width: 53,
                       decoration: const BoxDecoration(
                         color: green,
                         shape: BoxShape.circle,
