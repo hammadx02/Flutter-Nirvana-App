@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nirvana_app/screens/home_screen.dart';
+import 'package:nirvana_app/screens/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Nirvana App',
-      home: HomeScreen(),
+      home: SplashScreen(),
     );
   }
 }
