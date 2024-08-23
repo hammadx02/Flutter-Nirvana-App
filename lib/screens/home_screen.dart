@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,14 +128,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: const TextField(
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    
-                    suffixIcon:  Icon(
+                    suffixIcon: Icon(
                       CupertinoIcons.search,
                       size: 30,
                     ),
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Event',
+                style: GoogleFonts.jotiOne(
+                  fontWeight: FontWeight.w300,
+                  fontSize: 20,
+                  color: black,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              
             ],
           ),
         ),
