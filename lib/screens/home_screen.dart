@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nirvana_app/screens/menu_screen.dart';
 import 'package:nirvana_app/utils/app_colors.dart';
 
+import '../models/event_model.dart';
 import '../widgets/event_container.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,6 +15,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final List<EventModel> _eventItems = [
+    EventModel(
+      image: 'assets/images/vol2.png',
+      title: 'New Year Market Vol 2',
+      time: '19:30',
+      date: '24/07/2024',
+      location: 'Floor 2, Nirvana Space',
+    ),
+    EventModel(
+      image: 'assets/images/vol1.png',
+      title: 'Hallowen Market Vol 1',
+      time: '22:30',
+      date: '24/09/2024',
+      location: 'Floor 5, Nirvana Space',
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,7 +169,22 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 20,
               ),
-              const EventContainer(),
+              Expanded(
+                child: ListView.builder(
+                  // physics: const BouncingScrollPhysics(),
+                  itemCount: _eventItems.length,
+                  itemBuilder: (context, index) {
+                    return EventContainer(
+                      image: _eventItems[index].image,
+                      title: _eventItems[index].title,
+                      time: _eventItems[index].time,
+                      date: _eventItems[index].date,
+                      location: _eventItems[index].location,
+                    );
+                  },
+                ),
+              ),
+              // EventContainer(),
             ],
           ),
         ),
@@ -159,4 +192,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-

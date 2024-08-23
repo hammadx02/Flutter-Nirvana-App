@@ -4,10 +4,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nirvana_app/utils/app_colors.dart';
 
 class EventContainer extends StatelessWidget {
+   final String image;
+  final String title;
+  final String time;
+  final String date;
+  final String location;
   const EventContainer({
-    super.key,
+    super.key, required this.image, required this.title, required this.time, required this.date, required this.location,
   });
 
+ 
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,7 +43,7 @@ class EventContainer extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.asset(
-                'assets/images/vol2.png',
+                image,
                 fit: BoxFit.cover,
               ),
             ),
@@ -48,7 +54,7 @@ class EventContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'New Year Market Vol 2',
+                 title,
                   style: GoogleFonts.ibmPlexMono(
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
@@ -73,7 +79,7 @@ class EventContainer extends StatelessWidget {
                           size: 18,
                         ),
                         title: Text(
-                          '19:30',
+                         time,
                           style: GoogleFonts.ibmPlexMono(
                             fontWeight: FontWeight.w600,
                             fontSize: 12,
@@ -95,7 +101,7 @@ class EventContainer extends StatelessWidget {
                           size: 18,
                         ),
                         title: Text(
-                          '24/07/2024',
+                         date,
                           style: GoogleFonts.ibmPlexMono(
                             fontWeight: FontWeight.w600,
                             fontSize: 12,
@@ -120,7 +126,7 @@ class EventContainer extends StatelessWidget {
                     size: 18,
                   ),
                   title: Text(
-                    'Floor 2, Nirvana Space',
+                    location,
                     style: GoogleFonts.ibmPlexMono(
                       fontWeight: FontWeight.w600,
                       fontSize: 12,
