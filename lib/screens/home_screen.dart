@@ -14,8 +14,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final List<EventModel> _eventItems = [
     EventModel(
       image: 'assets/images/vol2.png',
@@ -36,6 +35,8 @@ class _HomeScreenState extends State<HomeScreen>
   late AnimationController _controller;
   late Animation<double> _fadeInAnimation;
   late Animation<Offset> _slideUpAnimation;
+  late Animation<double> _buttonOpacityAnimation;
+  late Animation<double> _buttonScaleAnimation;
 
   @override
   void initState() {
@@ -55,6 +56,20 @@ class _HomeScreenState extends State<HomeScreen>
       CurvedAnimation(
         parent: _controller,
         curve: Curves.easeOut,
+      ),
+    );
+
+    _buttonOpacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.5, 0.7, curve: Curves.easeIn),
+      ),
+    );
+
+    _buttonScaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.5, 0.8, curve: Curves.elasticOut),
       ),
     );
   }
@@ -169,33 +184,37 @@ class _HomeScreenState extends State<HomeScreen>
               const SizedBox(
                 height: 30,
               ),
-              AnimatedContainer(
-                duration: const Duration(seconds: 2),
-                curve: Curves.bounceOut,
-                child: Container(
-                  height: 56,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: white,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: black,
-                    ),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: pink,
-                        spreadRadius: 0,
-                        blurRadius: 0,
-                        offset: Offset(1.5, 3),
+              FadeTransition(
+                opacity: _buttonOpacityAnimation,
+                child: ScaleTransition(
+                  scale: _buttonScaleAnimation,
+                  child: Container(
+
+                    
+                    height: 56,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: black,
                       ),
-                    ],
-                  ),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      suffixIcon: Icon(
-                        CupertinoIcons.search,
-                        size: 30,
+                      boxShadow: const [
+                        BoxShadow(
+                          color: pink,
+                          spreadRadius: 0,
+                          blurRadius: 0,
+                          offset: Offset(1.5, 3),
+                        ),
+                      ],
+                    ),
+                    child: const TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        suffixIcon: Icon(
+                          CupertinoIcons.search,
+                          size: 30,
+                        ),
                       ),
                     ),
                   ),
@@ -240,8 +259,8 @@ class _HomeScreenState extends State<HomeScreen>
                     ).animate(
                       CurvedAnimation(
                         parent: itemController,
-                        curve:
-                            Interval(animationDelay, 1.0, curve: Curves.easeOut),
+                        curve: Interval(animationDelay, 1.0,
+                            curve: Curves.easeOut),
                       ),
                     );
                     return FadeTransition(
