@@ -14,7 +14,8 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
   final List<EventModel> _eventItems = [
     EventModel(
       image: 'assets/images/vol2.png',
@@ -31,6 +32,19 @@ class _HomeScreenState extends State<HomeScreen> {
       location: 'Floor 5, Nirvana Space',
     ),
   ];
+
+  late AnimationController _controller;
+  late Animation<double> _fadeInAnimation;
+  late Animation<Offset> _scaleUpAnimation;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
