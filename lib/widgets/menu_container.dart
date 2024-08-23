@@ -52,33 +52,39 @@ class MenuContainer extends StatelessWidget {
           const SizedBox(
             height: 5,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                title,
-                style: GoogleFonts.ibmPlexMono(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12,
-                  color: black,
+          SizedBox(
+            width: 164,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.ibmPlexMono(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                    color: black,
+                  ),
                 ),
-              ),
-              Text(
-                price + '\$',
-                style: GoogleFonts.ibmPlexMono(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12,
-                  color: black,
+                Text(
+                  '$price\$',
+                  style: GoogleFonts.ibmPlexMono(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                    color: black,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          Text(
-            ingredints,
-            style: GoogleFonts.ibmPlexMono(
-              fontWeight: FontWeight.w300,
-              fontSize: 9,
-              color: grey,
+          SizedBox(
+            width: 164,
+            child: Text(
+              ingredints,
+              style: GoogleFonts.ibmPlexMono(
+                fontWeight: FontWeight.w300,
+                fontSize: 9,
+                color: grey,
+              ),
             ),
           ),
         ],
