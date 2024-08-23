@@ -10,7 +10,26 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _logoOpacityAnimation;
+  late Animation<Offset> _logoSlideAnimation;
+  late Animation<double> _buttonOpacityAnimation;
+  late Animation<double> _buttonScaleAnimation;
+  late Animation<double> _textOpacityAnimation;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(
+        seconds: 3,
+      ),
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
