@@ -4,8 +4,42 @@ import 'package:nirvana_app/models/menu_model.dart';
 import 'package:nirvana_app/utils/app_colors.dart';
 import '../widgets/menu_container.dart';
 
-class MenuScreen extends StatelessWidget {
+class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
+
+  @override
+  State<MenuScreen> createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends State<MenuScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _fadeInAnimation;
+  late Animation<Offset> _slideUpAnimation;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    )..forward();
+
+    _fadeInAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    );
+
+    _slideUpAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.3),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeOut,
+      ),
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +90,18 @@ class MenuScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Menu',
-                style: GoogleFonts.jotiOne(
-                  fontWeight: FontWeight.w300,
-                  fontSize: 24,
-                  color: black,
+              FadeTransition(
+                opacity: _fadeInAnimation,
+                child: SlideTransition(
+                  position: _slideUpAnimation,
+                  child: Text(
+                    'Menu',
+                    style: GoogleFonts.jotiOne(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 24,
+                      color: black,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -72,12 +112,19 @@ class MenuScreen extends StatelessWidget {
                   shrinkWrap: true,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    mainAxisSpacing: 5, // Reduced spacing
-                    crossAxisSpacing: 20, // Reduced spacing
-                    childAspectRatio: (0.845/ 1.2), // Adjusted aspect ratio
+                    mainAxisSpacing: 5,
+                    crossAxisSpacing: 20,
+                    childAspectRatio: (0.845 / 1.2),
                   ),
                   itemCount: _menuItems.length,
                   itemBuilder: (context, index) {
+                    
+                    final animationDelay = 0.2 * index;
+                    final itemController = AnimationController(
+                      vsync: this,
+                      duration: Duration(seconds: 2),
+                    )..forward();
+
                     return MenuContainer(
                       image: _menuItems[index].image,
                       title: _menuItems[index].title,
@@ -94,5 +141,3 @@ class MenuScreen extends StatelessWidget {
     );
   }
 }
-
-
