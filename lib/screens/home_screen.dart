@@ -50,7 +50,19 @@ class _HomeScreenState extends State<HomeScreen>
       curve: Curves.easeIn,
     );
 
-    _slideUpAnimation = 
+    _slideUpAnimation =
+        Tween<Offset>(begin: const Offset(0.0, 0.3), end: Offset.zero).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeOut,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -62,88 +74,97 @@ class _HomeScreenState extends State<HomeScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  RichText(
-                    text: TextSpan(
-                      text: 'Nirvana',
-                      style: GoogleFonts.ibmPlexMono(
-                        color: purple,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
+              FadeTransition(
+                opacity: _fadeInAnimation,
+                child: SlideTransition(
+                  position: _slideUpAnimation,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          text: 'Nirvana',
+                          style: GoogleFonts.ibmPlexMono(
+                            color: purple,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: ' Space',
+                              style: GoogleFonts.ibmPlexMono(
+                                color: pink,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                              ),
+                            ),
+                            TextSpan(
+                              text: '\nCreative',
+                              style: GoogleFonts.ibmPlexMono(
+                                color: orange,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                              ),
+                            ),
+                            TextSpan(
+                              text: ' Hub',
+                              style: GoogleFonts.ibmPlexMono(
+                                color: green,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      children: [
-                        TextSpan(
-                          text: ' Space',
-                          style: GoogleFonts.ibmPlexMono(
-                            color: pink,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MenuScreen(),
+                            ),
+                          );
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(seconds: 1),
+                          child: Container(
+                            height: 53,
+                            width: 53,
+                            decoration: const BoxDecoration(
+                              color: green,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: pink,
+                                  spreadRadius: 0,
+                                  blurRadius: 0,
+                                  offset: Offset(1.5, 3),
+                                ),
+                                BoxShadow(
+                                  color: yellow,
+                                  spreadRadius: 0,
+                                  blurRadius: 0,
+                                  offset: Offset(1.5, 1.5),
+                                ),
+                              ],
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Menu',
+                                style: GoogleFonts.jotiOne(
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 12,
+                                  color: black,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                        TextSpan(
-                          text: '\nCreative',
-                          style: GoogleFonts.ibmPlexMono(
-                            color: orange,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
-                          ),
-                        ),
-                        TextSpan(
-                          text: ' Hub',
-                          style: GoogleFonts.ibmPlexMono(
-                            color: green,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MenuScreen(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      height: 53,
-                      width: 53,
-                      decoration: const BoxDecoration(
-                        color: green,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: pink,
-                            spreadRadius: 0,
-                            blurRadius: 0,
-                            offset: Offset(1.5, 3),
-                          ),
-                          BoxShadow(
-                            color: yellow,
-                            spreadRadius: 0,
-                            blurRadius: 0,
-                            offset: Offset(1.5, 1.5),
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Menu',
-                          style: GoogleFonts.jotiOne(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 12,
-                            color: black,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
               const SizedBox(
                 height: 30,
