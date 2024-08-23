@@ -169,30 +169,34 @@ class _HomeScreenState extends State<HomeScreen>
               const SizedBox(
                 height: 30,
               ),
-              Container(
-                height: 56,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: white,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: black,
-                  ),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: pink,
-                      spreadRadius: 0,
-                      blurRadius: 0,
-                      offset: Offset(1.5, 3),
+              AnimatedContainer(
+                duration: const Duration(seconds: 2),
+                curve: Curves.bounceOut,
+                child: Container(
+                  height: 56,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: black,
                     ),
-                  ],
-                ),
-                child: const TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    suffixIcon: Icon(
-                      CupertinoIcons.search,
-                      size: 30,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: pink,
+                        spreadRadius: 0,
+                        blurRadius: 0,
+                        offset: Offset(1.5, 3),
+                      ),
+                    ],
+                  ),
+                  child: const TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      suffixIcon: Icon(
+                        CupertinoIcons.search,
+                        size: 30,
+                      ),
                     ),
                   ),
                 ),
@@ -215,6 +219,11 @@ class _HomeScreenState extends State<HomeScreen>
                 child: ListView.builder(
                   itemCount: _eventItems.length,
                   itemBuilder: (context, index) {
+                    final animationDelay = 0.2 * index;
+                    final itemController = AnimationController(
+                      vsync: this,
+                      duration: const Duration(seconds: 2),
+                    )..forward();
                     return EventContainer(
                       image: _eventItems[index].image,
                       title: _eventItems[index].title,
