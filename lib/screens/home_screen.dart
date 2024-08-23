@@ -171,7 +171,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Expanded(
                 child: ListView.builder(
-                  // physics: const BouncingScrollPhysics(),
                   itemCount: _eventItems.length,
                   itemBuilder: (context, index) {
                     return EventContainer(
@@ -184,7 +183,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
-              // EventContainer(),
             ],
           ),
         ),
