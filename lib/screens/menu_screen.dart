@@ -11,8 +11,7 @@ class MenuScreen extends StatefulWidget {
   State<MenuScreen> createState() => _MenuScreenState();
 }
 
-class _MenuScreenState extends State<MenuScreen>
-    with SingleTickerProviderStateMixin {
+class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeInAnimation;
   late Animation<Offset> _slideUpAnimation;
@@ -21,7 +20,7 @@ class _MenuScreenState extends State<MenuScreen>
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: const Duration(seconds: 2),
     )..forward();
 
     _fadeInAnimation = CurvedAnimation(
@@ -118,18 +117,42 @@ class _MenuScreenState extends State<MenuScreen>
                   ),
                   itemCount: _menuItems.length,
                   itemBuilder: (context, index) {
-                    
                     final animationDelay = 0.2 * index;
                     final itemController = AnimationController(
                       vsync: this,
-                      duration: Duration(seconds: 2),
+                      duration: const Duration(seconds: 2),
                     )..forward();
 
-                    return MenuContainer(
-                      image: _menuItems[index].image,
-                      title: _menuItems[index].title,
-                      price: _menuItems[index].price,
-                      ingredints: _menuItems[index].ingredints,
+                    final fadeInAnimation = CurvedAnimation(
+                      parent: itemController,
+                      curve: Interval(
+                        animationDelay,
+                        1.0,
+                        curve: Curves.easeIn,
+                      ),
+                    );
+
+                    final slideUpAnimation = Tween<Offset>(
+                      begin: const Offset(0, 0.3),
+                      end: Offset.zero,
+                    ).animate(
+                      CurvedAnimation(
+                        parent: itemController,
+                        curve: Interval(animationDelay, 1.0,
+                            curve: Curves.easeOut),
+                      ),
+                    );
+                    return FadeTransition(
+                      opacity: fadeInAnimation,
+                      child: SlideTransition(
+                        position: slideUpAnimation,
+                        child: MenuContainer(
+                          image: _menuItems[index].image,
+                          title: _menuItems[index].title,
+                          price: _menuItems[index].price,
+                          ingredints: _menuItems[index].ingredints,
+                        ),
+                      ),
                     );
                   },
                 ),
