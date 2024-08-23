@@ -11,3 +11,4 @@ const Color white = Color(0xFFFFFFFF);
 const Color black = Color(0xFF000000);
 const Color yellow = Color(0xFFFEED21);
 const Color peach = Color(0xFFFFF2E8);
+const Color grey = Color(0xFF676767);
