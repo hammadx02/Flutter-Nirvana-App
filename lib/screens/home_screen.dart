@@ -35,15 +35,22 @@ class _HomeScreenState extends State<HomeScreen>
 
   late AnimationController _controller;
   late Animation<double> _fadeInAnimation;
-  late Animation<Offset> _scaleUpAnimation;
+  late Animation<Offset> _slideUpAnimation;
 
   @override
   void initState() {
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
-    );
+    )..forward();
     super.initState();
+
+    _fadeInAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    );
+
+    _slideUpAnimation = 
   }
 
   @override
