@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nirvana_app/screens/menu_screen.dart';
@@ -101,6 +102,38 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Container(
+                height: 56,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: black,
+                  ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: pink,
+                      spreadRadius: 0,
+                      blurRadius: 0,
+                      offset: Offset(1.5, 3),
+                    ),
+                  ],
+                ),
+                child: const TextField(
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    
+                    suffixIcon:  Icon(
+                      CupertinoIcons.search,
+                      size: 30,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
