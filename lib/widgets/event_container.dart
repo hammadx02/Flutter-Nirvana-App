@@ -21,7 +21,6 @@ class EventContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-    
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Container(
         height: 295,
@@ -55,8 +54,11 @@ class EventContainer extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(
+                    height: 10,
+                  ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
