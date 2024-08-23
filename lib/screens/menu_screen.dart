@@ -42,7 +42,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final List<MenuModel> _menuItems = [
+    final List<MenuModel> menuItems = [
       const MenuModel(
         image: 'assets/images/melkon.png',
         title: 'Melkon',
@@ -115,7 +115,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     crossAxisSpacing: 20,
                     childAspectRatio: (0.845 / 1.2),
                   ),
-                  itemCount: _menuItems.length,
+                  itemCount: menuItems.length,
                   itemBuilder: (context, index) {
                     final animationDelay = 0.2 * index;
                     final itemController = AnimationController(
@@ -147,10 +147,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                       child: SlideTransition(
                         position: slideUpAnimation,
                         child: MenuContainer(
-                          image: _menuItems[index].image,
-                          title: _menuItems[index].title,
-                          price: _menuItems[index].price,
-                          ingredints: _menuItems[index].ingredints,
+                          image: menuItems[index].image,
+                          title: menuItems[index].title,
+                          price: menuItems[index].price,
+                          ingredints: menuItems[index].ingredints,
                         ),
                       ),
                     );
