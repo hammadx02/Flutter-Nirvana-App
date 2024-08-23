@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   final List<EventModel> _eventItems = [
     EventModel(
       image: 'assets/images/vol2.png',
@@ -224,12 +224,38 @@ class _HomeScreenState extends State<HomeScreen>
                       vsync: this,
                       duration: const Duration(seconds: 2),
                     )..forward();
-                    return EventContainer(
-                      image: _eventItems[index].image,
-                      title: _eventItems[index].title,
-                      time: _eventItems[index].time,
-                      date: _eventItems[index].date,
-                      location: _eventItems[index].location,
+
+                    final fadeInAnimation = CurvedAnimation(
+                      parent: itemController,
+                      curve: Interval(
+                        animationDelay,
+                        1.0,
+                        curve: Curves.easeIn,
+                      ),
+                    );
+
+                    final slideUpAnimation = Tween<Offset>(
+                      begin: const Offset(0, 0.3),
+                      end: Offset.zero,
+                    ).animate(
+                      CurvedAnimation(
+                        parent: itemController,
+                        curve:
+                            Interval(animationDelay, 1.0, curve: Curves.easeOut),
+                      ),
+                    );
+                    return FadeTransition(
+                      opacity: fadeInAnimation,
+                      child: SlideTransition(
+                        position: slideUpAnimation,
+                        child: EventContainer(
+                          image: _eventItems[index].image,
+                          title: _eventItems[index].title,
+                          time: _eventItems[index].time,
+                          date: _eventItems[index].date,
+                          location: _eventItems[index].location,
+                        ),
+                      ),
                     );
                   },
                 ),
