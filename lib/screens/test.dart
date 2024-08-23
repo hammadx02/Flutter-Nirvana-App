@@ -1,67 +1,63 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nirvana_app/screens/home_screen.dart';
+import 'package:nirvana_app/screens/menu_screen.dart';
 import 'package:nirvana_app/utils/app_colors.dart';
+import '../models/event_model.dart';
+import '../widgets/event_container.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen>
+    with TickerProviderStateMixin {
+  final List<EventModel> _eventItems = [
+    EventModel(
+      image: 'assets/images/vol2.png',
+      title: 'New Year Market Vol 2',
+      time: '19:30',
+      date: '24/07/2024',
+      location: 'Floor 2, Nirvana Space',
+    ),
+    EventModel(
+      image: 'assets/images/vol1.png',
+      title: 'Hallowen Market Vol 1',
+      time: '22:30',
+      date: '24/09/2024',
+      location: 'Floor 5, Nirvana Space',
+    ),
+  ];
+
   late AnimationController _controller;
-  late Animation<double> _logoOpacityAnimation;
-  late Animation<Offset> _logoSlideAnimation;
-  late Animation<double> _buttonOpacityAnimation;
-  late Animation<double> _buttonScaleAnimation;
-  late Animation<double> _textOpacityAnimation;
-  
+  late Animation<double> _fadeInAnimation;
+  late Animation<Offset> _slideUpAnimation;
+
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
+      duration: const Duration(seconds: 2),
       vsync: this,
-      duration: const Duration(seconds: 3),
+    )..forward();
+
+    _fadeInAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
     );
 
-    _logoOpacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+    _slideUpAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.3),
+      end: Offset.zero,
+    ).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 0.5, curve: Curves.easeIn),
+        curve: Curves.easeOut,
       ),
     );
-
-    _logoSlideAnimation = Tween<Offset>(begin: Offset(0, 1), end: Offset.zero).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.0, 0.5, curve: Curves.easeInOut),
-      ),
-    );
-
-    _buttonOpacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.5, 0.7, curve: Curves.easeIn),
-      ),
-    );
-
-    _buttonScaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.5, 0.8, curve: Curves.elasticOut),
-      ),
-    );
-
-    _textOpacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.8, 1.0, curve: Curves.easeIn),
-      ),
-    );
-
-    _controller.forward();
   }
 
   @override
@@ -73,81 +69,202 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: lightBlue,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Spacer(),
-          SlideTransition(
-            position: _logoSlideAnimation,
-            child: FadeTransition(
-              opacity: _logoOpacityAnimation,
-              child: SizedBox(
-                height: 350,
-                width: double.infinity,
-                child: Image.asset(
-                  'assets/images/logo.png',
-                ),
-              ),
-            ),
-          ),
-          const Spacer(),
-          ScaleTransition(
-            scale: _buttonScaleAnimation,
-            child: FadeTransition(
-              opacity: _buttonOpacityAnimation,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 19.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomeScreen(),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    height: 56,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: green,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: black,
-                      ),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: black,
-                          spreadRadius: 0,
-                          blurRadius: 0,
-                          offset: Offset(1.5, 3),
-                        ),
-                      ],
-                    ),
-                    child: Center(
-                      child: FadeTransition(
-                        opacity: _textOpacityAnimation,
-                        child: Text(
-                          'Get Started',
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FadeTransition(
+                opacity: _fadeInAnimation,
+                child: SlideTransition(
+                  position: _slideUpAnimation,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          text: 'Nirvana',
                           style: GoogleFonts.ibmPlexMono(
+                            color: purple,
                             fontWeight: FontWeight.bold,
-                            fontSize: 32,
-                            color: black,
+                            fontSize: 24,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: ' Space',
+                              style: GoogleFonts.ibmPlexMono(
+                                color: pink,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                              ),
+                            ),
+                            TextSpan(
+                              text: '\nCreative',
+                              style: GoogleFonts.ibmPlexMono(
+                                color: orange,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                              ),
+                            ),
+                            TextSpan(
+                              text: ' Hub',
+                              style: GoogleFonts.ibmPlexMono(
+                                color: green,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MenuScreen(),
+                            ),
+                          );
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(seconds: 1),
+                          height: 53,
+                          width: 53,
+                          decoration: BoxDecoration(
+                            color: green,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: pink,
+                                spreadRadius: 0,
+                                blurRadius: 0,
+                                offset: Offset(1.5, 3),
+                              ),
+                              BoxShadow(
+                                color: yellow,
+                                spreadRadius: 0,
+                                blurRadius: 0,
+                                offset: Offset(1.5, 1.5),
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Menu',
+                              style: GoogleFonts.jotiOne(
+                                fontWeight: FontWeight.w300,
+                                fontSize: 12,
+                                color: black,
+                              ),
+                            ),
                           ),
                         ),
                       ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              AnimatedContainer(
+                duration: const Duration(seconds: 1),
+                curve: Curves.easeInOut,
+                height: 56,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: black,
+                  ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: pink,
+                      spreadRadius: 0,
+                      blurRadius: 0,
+                      offset: Offset(1.5, 3),
+                    ),
+                  ],
+                ),
+                child: const TextField(
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    suffixIcon: Icon(
+                      CupertinoIcons.search,
+                      size: 30,
                     ),
                   ),
                 ),
               ),
-            ),
+              const SizedBox(
+                height: 20,
+              ),
+              FadeTransition(
+                opacity: _fadeInAnimation,
+                child: SlideTransition(
+                  position: _slideUpAnimation,
+                  child: Text(
+                    'Event',
+                    style: GoogleFonts.jotiOne(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 20,
+                      color: black,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _eventItems.length,
+                  itemBuilder: (context, index) {
+                    // Create a staggered delay for each item
+                    final animationDelay =
+                        0.1 * index; // Adjust the delay as needed
+                    final itemController = AnimationController(
+                      duration: const Duration(seconds: 2),
+                      vsync: this,
+                    )..forward();
+
+                    final fadeInAnimation = CurvedAnimation(
+                      parent: itemController,
+                      curve: Interval(animationDelay, 1.0, curve: Curves.easeIn),
+                    );
+
+                    final slideUpAnimation = Tween<Offset>(
+                      begin: const Offset(0, 0.3),
+                      end: Offset.zero,
+                    ).animate(
+                      CurvedAnimation(
+                        parent: itemController,
+                        curve:
+                            Interval(animationDelay, 1.0, curve: Curves.easeOut),
+                      ),
+                    );
+
+                    return FadeTransition(
+                      opacity: fadeInAnimation,
+                      child: SlideTransition(
+                        position: slideUpAnimation,
+                        child: EventContainer(
+                          image: _eventItems[index].image,
+                          title: _eventItems[index].title,
+                          time: _eventItems[index].time,
+                          date: _eventItems[index].date,
+                          location: _eventItems[index].location,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-          const SizedBox(
-            height: 40,
-          ),
-        ],
+        ),
       ),
     );
   }
